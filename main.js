@@ -43,9 +43,16 @@ function resultadoCalculo() {
     //variáveis e saídas
     entradas=[];
     saidaArray = eval(valorUltimaConta);
-
-    consoleResultado.innerHTML = eval(valorUltimaConta);
+    let x = saidaArray;
+    if (x.toString().length > 13) {
+        consoleResultado.innerHTML = parseFloat(saidaArray).toFixed(10);
+        ultimaConta.innerHTML = `Expressão: ${textoUltimaConta}`;
+    } else{
+    consoleResultado.innerHTML = saidaArray;
     ultimaConta.innerHTML = `Expressão: ${textoUltimaConta}`;
+    }
+    let y = saidaArray;
+    tamanhoTexto = y.toString();
 }
 
 function saidaValores(){
@@ -118,7 +125,7 @@ function operacaoMaisMenos(){
         }
     } else {
         inputuser = '-';
-        if (tamanhoTexto.length <= 12){
+        if (tamanhoTexto.length <= 13){
             saidaArray += inputuser;
             saidaValores();
         }
@@ -129,11 +136,13 @@ function operacaoSoma(){
     if (ultimaConta.textContent != ''){
         ultimaConta.innerHTML = '';
     }
-    entradas.push(parseFloat(saidaArray));
-    inputuser = '+'
-    entradas.push(inputuser)
-    saidaValores();
-    saidaArray = '';
+    if (tamanhoTexto.length < 13){
+        entradas.push(parseFloat(saidaArray));
+        inputuser = '+'
+        entradas.push(inputuser)
+        saidaValores();
+        saidaArray = '';
+    }
 }
 
 
@@ -141,33 +150,39 @@ function operacaoSubtracao(){
     if (ultimaConta.textContent != ''){
         ultimaConta.innerHTML = '';
     }
-    entradas.push(parseFloat(saidaArray));
-    inputuser = '-'
-    entradas.push(inputuser)
-    saidaValores();
-    saidaArray = '';
+    if (tamanhoTexto.length < 13){
+        entradas.push(parseFloat(saidaArray));
+        inputuser = '-'
+        entradas.push(inputuser)
+        saidaValores();
+        saidaArray = '';
+    }
 }
 
 function operacaoDivisao(){
     if (ultimaConta.textContent != ''){
         ultimaConta.innerHTML = '';
     }
-    entradas.push(parseFloat(saidaArray));
-    inputuser = '÷'
-    entradas.push(inputuser)
-    saidaValores();
-    saidaArray = '';
+    if (tamanhoTexto.length < 13){
+        entradas.push(parseFloat(saidaArray));
+        inputuser = '÷'
+        entradas.push(inputuser)
+        saidaValores();
+        saidaArray = '';
+    }
 }
 
 function operacaoMultiplicacao(){
     if (ultimaConta.textContent != ''){
         ultimaConta.innerHTML = '';
     }
-    entradas.push(parseFloat(saidaArray));
-    inputuser = 'x'
-    entradas.push(inputuser)
-    saidaValores();
-    saidaArray = '';
+    if (tamanhoTexto.length < 13){
+        entradas.push(parseFloat(saidaArray));
+        inputuser = 'x'
+        entradas.push(inputuser)
+        saidaValores();
+        saidaArray = '';
+    }
 }
 
 function zero(){
@@ -177,7 +192,7 @@ function zero(){
         saidaArray = '';
     }
     inputuser = 0;
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
@@ -190,7 +205,7 @@ function um(){
         saidaArray = '';
     }
     inputuser = 1;
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
@@ -203,7 +218,7 @@ function dois(){
         saidaArray = '';
     }
     inputuser = 2;
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
@@ -216,7 +231,7 @@ function tres(){
         saidaArray = '';
     }
     inputuser = 3;
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
@@ -229,7 +244,7 @@ function quatro(){
         saidaArray = '';
     }
     inputuser = 4;
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
@@ -242,7 +257,7 @@ function cinco(){
         saidaArray = '';
     }
     inputuser = 5;
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
@@ -255,7 +270,7 @@ function seis(){
         saidaArray = '';
     }
     inputuser = 6;
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
@@ -268,7 +283,7 @@ function sete(){
         saidaArray = '';
     }
     inputuser = 7;
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
@@ -281,7 +296,7 @@ function oito(){
         saidaArray = '';
     }
     inputuser = 8;
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
@@ -294,7 +309,7 @@ function nove(){
         saidaArray = '';
     }
     inputuser = 9;
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
@@ -307,7 +322,7 @@ function ponto(){
         saidaArray = '';
     }
     inputuser = '.';
-    if (tamanhoTexto.length <= 12){
+    if (tamanhoTexto.length <= 13){
         saidaArray += inputuser;
         saidaValores();
     }
