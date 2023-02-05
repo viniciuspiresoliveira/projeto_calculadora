@@ -45,7 +45,7 @@ function resultadoCalculo() {
     saidaArray = eval(valorUltimaConta);
     let x = saidaArray;
     if (x.toString().length > 13) {
-        consoleResultado.innerHTML = parseFloat(saidaArray).toFixed(10);
+        consoleResultado.innerHTML = parseFloat(saidaArray).toFixed(4);
         ultimaConta.innerHTML = `Expressão: ${textoUltimaConta}`;
     } else{
     consoleResultado.innerHTML = saidaArray;
