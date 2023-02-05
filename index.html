@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="./main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Calculadora</h1>
+    </header>
+    <div class="container">
+        <div class="calculadora">
+            <div class="console-calculos">
+                <p id="resultado"></p>
+            </div>
+            <div class="primeira-linha">
+                <button onclick="limparCalc()" id="botao-limpar">A/C</button>
+                <button onclick="operacaoPorcentagem()" id="botao-percentual">%</button>
+                <button onclick="operacaoMaisMenos()" id="botao-mais-menos">+/-</button>
+            </div>
+            <div class="segunda-linha">
+                <button onclick="sete()" id="botao7">7</button>
+                <button onclick="oito()" id="botao8">8</button>
+                <button onclick="nove()" id="botao9">9</button>
+                <button onclick="operacaoDivisao()" id="botao-divisao">÷</button>
+            </div>
+            <div class="terceira-linha">
+                <button onclick="quatro()" id="botao4">4</button>
+                <button onclick="cinco()" id="botao5">5</button>
+                <button onclick="seis()" id="botao6">6</button>
+                <button onclick="operacaoMultiplicacao()" id="botao-multiplicacao">x</button>
+            </div>
+            <div class="quarta-linha">
+                <button onclick="um()" id="botao1">1</button>
+                <button onclick="dois()" id="botao2">2</button>
+                <button onclick="tres()" id="botao3">3</button>
+                <button onclick="operacaoSubtracao()" id="botao-menos">-</button>
+            </div>
+            <div class="quinta-linha">
+                <button onclick="zero()" id="botao0">0</button>
+                <button onclick="ponto()" id="botao-virgula">.</button>
+                <button onclick="operacaoSoma()" id="botao-mais">+</button>
+                <button onclick="resultadoCalculo()" id="botao-igual">=</button>
+            </div>
+        </div>
+    </div>
+    <p id="conta"></p>
+    <script src="./main.js"></script>
+</body>
+</html>
