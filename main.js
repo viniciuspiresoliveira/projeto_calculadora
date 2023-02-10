@@ -44,12 +44,24 @@ function resultadoCalculo() {
     entradas=[];
     saidaArray = eval(valorUltimaConta);
     let x = saidaArray;
+    let contRound = 10;
+    
     if (x.toString().length > 13) {
-        consoleResultado.innerHTML = parseFloat(saidaArray).toFixed(4);
-        ultimaConta.innerHTML = `Expressão: ${textoUltimaConta}`;
+        for (let i = 0; i < 10; i++){
+            if (x.toString().length > 13) {
+                contRound = contRound - 1;
+            }
+        }
+        if (x.toString().length > 13) {
+            consoleResultado.innerHTML = "Limite de caracteres"
+            ultimaConta.innerHTML = `Expressão: ${textoUltimaConta} = ${parseFloat(saidaArray).toFixed(4)}`;
+        } else {
+            consoleResultado.innerHTML = parseFloat(saidaArray).toFixed(contRound);
+            ultimaConta.innerHTML = `Expressão: ${textoUltimaConta}`;
+        }
     } else{
-    consoleResultado.innerHTML = saidaArray;
-    ultimaConta.innerHTML = `Expressão: ${textoUltimaConta}`;
+        consoleResultado.innerHTML = saidaArray;
+        ultimaConta.innerHTML = `Expressão: ${textoUltimaConta}`;
     }
     let y = saidaArray;
     tamanhoTexto = y.toString();
