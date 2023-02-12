@@ -6,6 +6,7 @@ let saidaArray = '';
 let saidaVisor = '';
 let inputuser = '';
 let tamanhoTexto = '';
+let cmdPonto = '';
 
 //Funções
 function resultadoCalculo() {
@@ -133,7 +134,20 @@ function operacaoMaisMenos(){
             }
             saidaArray=`${entradas[entradas.length - 1]}`;
             entradas.pop();
-            consoleResultado.innerHTML = textConsole;
+                //Remove NaN
+                for (let i = 0; i <= entradas.length -1; i++) {
+                    if (isNaN(entradas[i]) == true){
+                        if (entradas[i] != '+' && entradas[i] != '-' && entradas[i] != '÷' && entradas[i] != 'x'){
+                            entradas.splice(i,i);
+                            i = 0;
+                        }
+                    }
+                }
+            consoleResultado.innerHTML = '';
+            for (let i = 0; i <= entradas.length - 1; i++){
+                consoleResultado.innerHTML += entradas[i];
+            }
+            consoleResultado.innerHTML += saidaArray;
         }
     } else {
         inputuser = '-';
@@ -144,57 +158,76 @@ function operacaoMaisMenos(){
     }
 }
 
-function operacaoSoma(){
-    if (ultimaConta.textContent != ''){
-        ultimaConta.innerHTML = '';
-    }
+function operacaoDuplicada(){
     if (tamanhoTexto.length < 13){
+        if (tamanhoTexto.substring(tamanhoTexto.length-1,tamanhoTexto.length) == "x" || 
+        tamanhoTexto.substring(tamanhoTexto.length-1,tamanhoTexto.length) == "+" || 
+        tamanhoTexto.substring(tamanhoTexto.length-1,tamanhoTexto.length) == "-" || 
+        tamanhoTexto.substring(tamanhoTexto.length-1,tamanhoTexto.length) == "÷"){
+            entradas.pop();
+            tamanhoTexto = tamanhoTexto.substring(0,tamanhoTexto.length-1);
+            corrigeOperacao()
+        }
+
         entradas.push(parseFloat(saidaArray));
-        inputuser = '+'
         entradas.push(inputuser)
         saidaValores();
         saidaArray = '';
     }
+}
+
+function corrigeOperacao(){
+    //Remove NaN
+    for (let i = 0; i <= entradas.length -1; i++) {
+        if (isNaN(entradas[i]) == true){
+            if (entradas[i] != '+' && entradas[i] != '-' && entradas[i] != '÷' && entradas[i] != 'x'){
+                entradas.splice(i,i);
+                i = 0;
+            }
+        }
+    }
+    
+    consoleResultado.innerHTML = '';
+    for (let i = 0; i <= entradas.length - 1; i++){
+        consoleResultado.innerHTML += entradas[i];
+    }
+}
+
+function operacaoSoma(){
+    cmdPonto = '';
+    if (ultimaConta.textContent != ''){
+        ultimaConta.innerHTML = '';
+    }
+    inputuser = '+'
+    operacaoDuplicada();
 }
 
 
 function operacaoSubtracao(){
+    cmdPonto = '';
     if (ultimaConta.textContent != ''){
         ultimaConta.innerHTML = '';
     }
-    if (tamanhoTexto.length < 13){
-        entradas.push(parseFloat(saidaArray));
-        inputuser = '-'
-        entradas.push(inputuser)
-        saidaValores();
-        saidaArray = '';
-    }
+    inputuser = '-'
+    operacaoDuplicada();
 }
 
 function operacaoDivisao(){
+    cmdPonto = '';
     if (ultimaConta.textContent != ''){
         ultimaConta.innerHTML = '';
     }
-    if (tamanhoTexto.length < 13){
-        entradas.push(parseFloat(saidaArray));
-        inputuser = '÷'
-        entradas.push(inputuser)
-        saidaValores();
-        saidaArray = '';
-    }
+    inputuser = '÷'
+    operacaoDuplicada();
 }
 
 function operacaoMultiplicacao(){
+    cmdPonto = '';
     if (ultimaConta.textContent != ''){
         ultimaConta.innerHTML = '';
     }
-    if (tamanhoTexto.length < 13){
-        entradas.push(parseFloat(saidaArray));
-        inputuser = 'x'
-        entradas.push(inputuser)
-        saidaValores();
-        saidaArray = '';
-    }
+    inputuser = 'x'
+    operacaoDuplicada();
 }
 
 function zero(){
@@ -333,9 +366,13 @@ function ponto(){
         consoleResultado.innerHTML = '';
         saidaArray = '';
     }
-    inputuser = '.';
-    if (tamanhoTexto.length <= 13){
-        saidaArray += inputuser;
-        saidaValores();
+    if (tamanhoTexto.substring(tamanhoTexto.length-1,tamanhoTexto.length) != "." && cmdPonto == ''){
+        inputuser = '.';
+        if (tamanhoTexto.length <= 13){
+            saidaArray += inputuser;
+            saidaValores();
+        }
     }
+
+    cmdPonto = 'x';
 }
