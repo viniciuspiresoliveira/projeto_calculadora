@@ -99,7 +99,7 @@ function operacaoPorcentagem(){
             let valorPercentual = saidaArray;
             let textConsole = '';
             if (isNaN(valorPercentual) == false){
-                if (entradas[entradas.length-2] == '+' || entradas[entradas.length-2] == '-'){
+                if (entradas[entradas.length-1] == '+' || entradas[entradas.length-1] == '-'){
                     resultadoPercentual = (valorPercentual/100)*entradas[entradas.length-2];
                 } else {
                     resultadoPercentual = valorPercentual/100;
