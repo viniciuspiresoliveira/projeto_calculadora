@@ -9,6 +9,17 @@ let tamanhoTexto = '';
 let cmdPonto = '';
 
 //Funções
+function removeNAN() {
+    for (let i = 0; i <= entradas.length -1; i++) {
+        if (isNaN(entradas[i]) == true){
+            if (entradas[i] != '+' && entradas[i] != '-' && entradas[i] != '÷' && entradas[i] != 'x'){
+                entradas.splice(i,i);
+                i = 0;
+            }
+        }
+    }
+}
+
 function resultadoCalculo() {
     if (saidaArray != '') {
         entradas.push(parseFloat(saidaArray));
@@ -100,8 +111,10 @@ function operacaoPorcentagem(){
             let textConsole = '';
             if (isNaN(valorPercentual) == false){
                 if (entradas[entradas.length-1] == '+' || entradas[entradas.length-1] == '-'){
+                    removeNAN();
                     resultadoPercentual = (valorPercentual/100)*entradas[entradas.length-2];
                 } else {
+                    removeNAN()
                     resultadoPercentual = valorPercentual/100;
                 }
                 entradas.push(resultadoPercentual);
