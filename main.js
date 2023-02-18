@@ -34,8 +34,9 @@ function resultadoCalculo() {
         }
     }
     //Remove o ultimo valor do array, caso seja um operador
-    if (entradas[entradas.length - 1] == '+' || entradas[entradas.length - 1] == '-' || entradas[entradas.length - 1] == 'x' || entradas[entradas.length - 1] == '÷'){
-        entradas.pop();
+    const ultimaEntrada = entradas[entradas.length - 1];
+    if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
+        entradas = entradas.slice(0, -1);
     }
     
     //cria texto para calculo com eval e texto de expressão
@@ -51,7 +52,6 @@ function resultadoCalculo() {
             valorUltimaConta += entradas[i];
         }
     }
-
     //variáveis e saídas
     entradas=[];
     saidaArray = eval(valorUltimaConta);
@@ -212,16 +212,6 @@ function corrigeOperacao(){
 }
 
 function operacaoSoma(){
-    let ultimaEntrada = entradas[entradas.length-1];
-    if (ultimaEntrada == 'x' || ultimaEntrada == '÷' || ultimaEntrada == '-' || ultimaEntrada == '+') {
-        entradas.pop();
-        inputuser = '+';
-        entradas.push(inputuser);
-        consoleResultado.innerHTML = '';
-        for (let i = 0; i <= entradas.length - 1; i++){
-            consoleResultado.innerHTML += entradas[i];
-        }
-    }
     if (saidaArray != '') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
@@ -230,20 +220,20 @@ function operacaoSoma(){
         inputuser = '+'
         operacaoDuplicada();
     }
-}
-
-
-function operacaoSubtracao(){
-    let ultimaEntrada = entradas[entradas.length-1];
-    if (ultimaEntrada == 'x' || ultimaEntrada == '÷' || ultimaEntrada == '-' || ultimaEntrada == '+') {
-        entradas.pop();
-        inputuser = '-';
+    const ultimaEntrada = entradas[entradas.length - 1];
+    if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
+        entradas = entradas.slice(0, -1);
+        inputuser = '+';
         entradas.push(inputuser);
         consoleResultado.innerHTML = '';
         for (let i = 0; i <= entradas.length - 1; i++){
             consoleResultado.innerHTML += entradas[i];
         }
     }
+}
+
+
+function operacaoSubtracao(){
     if (saidaArray != '') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
@@ -252,19 +242,19 @@ function operacaoSubtracao(){
         inputuser = '-'
         operacaoDuplicada();
     }
-}
-
-function operacaoDivisao(){
-    let ultimaEntrada = entradas[entradas.length-1];
-    if (ultimaEntrada == 'x' || ultimaEntrada == '÷' || ultimaEntrada == '-' || ultimaEntrada == '+') {
-        entradas.pop();
-        inputuser = '÷';
+    const ultimaEntrada = entradas[entradas.length - 1];
+    if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
+        entradas = entradas.slice(0, -1);
+        inputuser = '-';
         entradas.push(inputuser);
         consoleResultado.innerHTML = '';
         for (let i = 0; i <= entradas.length - 1; i++){
             consoleResultado.innerHTML += entradas[i];
         }
     }
+}
+
+function operacaoDivisao(){
     if (saidaArray != '') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
@@ -273,19 +263,19 @@ function operacaoDivisao(){
         inputuser = '÷'
         operacaoDuplicada();
     }
-}
-
-function operacaoMultiplicacao(){
-    let ultimaEntrada = entradas[entradas.length-1];
-    if (ultimaEntrada == 'x' || ultimaEntrada == '÷' || ultimaEntrada == '-' || ultimaEntrada == '+') {
-        entradas.pop();
-        inputuser = 'x';
+    const ultimaEntrada = entradas[entradas.length - 1];
+    if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
+        entradas = entradas.slice(0, -1);
+        inputuser = '÷';
         entradas.push(inputuser);
         consoleResultado.innerHTML = '';
         for (let i = 0; i <= entradas.length - 1; i++){
             consoleResultado.innerHTML += entradas[i];
         }
     }
+}
+
+function operacaoMultiplicacao(){
     if (saidaArray != '') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
@@ -293,6 +283,16 @@ function operacaoMultiplicacao(){
         }
         inputuser = 'x'
         operacaoDuplicada();
+    }
+    const ultimaEntrada = entradas[entradas.length - 1];
+    if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
+        entradas = entradas.slice(0, -1);
+        inputuser = 'x';
+        entradas.push(inputuser);
+        consoleResultado.innerHTML = '';
+        for (let i = 0; i <= entradas.length - 1; i++){
+            consoleResultado.innerHTML += entradas[i];
+        }
     }
 }
 
