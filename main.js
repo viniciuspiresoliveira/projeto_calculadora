@@ -8,75 +8,64 @@ let inputuser = '';
 let tamanhoTexto = '';
 let cmdPonto = '';
 
-//Funções
-function removeNAN() {
-    for (let i = 0; i <= entradas.length -1; i++) {
-        if (isNaN(entradas[i]) == true){
-            if (entradas[i] != '+' && entradas[i] != '-' && entradas[i] != '÷' && entradas[i] != 'x'){
-                entradas.splice(i,i);
-                i = 0;
-            }
-        }
-    }
-}
-
 function resultadoCalculo() {
-    if (saidaArray != '') {
-        entradas.push(parseFloat(saidaArray));
-    }
-    //Remove NaN
-    for (let i = 0; i <= entradas.length -1; i++) {
-        if (isNaN(entradas[i]) == true){
-            if (entradas[i] != '+' && entradas[i] != '-' && entradas[i] != '÷' && entradas[i] != 'x'){
-                entradas.splice(i,i);
-                i = 0;
+    if (saidaArray !== ''|| entradas.length > 0) {
+        if (saidaArray == '(-'){
+            saidaArray = '';
+        }
+        let primeirosDoisDigitos = saidaArray.substring(0,2);
+        if (primeirosDoisDigitos === '(-'){
+            saidaArray += ')'
+        }
+        if (saidaArray != '') {
+            entradas.push(saidaArray);
+        }
+        //Remove o ultimo valor do array, caso seja um operador
+        const ultimaEntrada = entradas[entradas.length - 1];
+        if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
+            entradas = entradas.slice(0, -1);
+        }
+        
+        //cria texto para calculo com eval e texto de expressão
+        let textoUltimaConta = '';
+        let valorUltimaConta = '';
+        for (let i = 0; i <= entradas.length -1; i++){
+            textoUltimaConta += entradas[i];
+            if (entradas[i] == 'x'){
+                valorUltimaConta += '*';
+            } else if (entradas[i] == '÷') {
+                valorUltimaConta += '/';
+            } else {
+                valorUltimaConta += entradas[i];
             }
         }
-    }
-    //Remove o ultimo valor do array, caso seja um operador
-    const ultimaEntrada = entradas[entradas.length - 1];
-    if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
-        entradas = entradas.slice(0, -1);
-    }
-    
-    //cria texto para calculo com eval e texto de expressão
-    let textoUltimaConta = '';
-    let valorUltimaConta = '';
-    for (let i = 0; i <= entradas.length -1; i++){
-        textoUltimaConta += entradas[i];
-        if (entradas[i] == 'x'){
-            valorUltimaConta += '*';
-        } else if (entradas[i] == '÷') {
-            valorUltimaConta += '/';
-        } else {
-            valorUltimaConta += entradas[i];
-        }
-    }
-    //variáveis e saídas
-    entradas=[];
-    saidaArray = eval(valorUltimaConta);
-    let x = saidaArray;
-    let contRound = 10;
-    
-    if (x.toString().length > 13) {
-        for (let i = 0; i < 10; i++){
-            if (x.toString().length > 13) {
-                contRound = contRound - 1;
-            }
-        }
+        //variáveis e saídas
+        entradas=[];
+        saidaArray = eval(valorUltimaConta);
+        let x = saidaArray;
+        let contRound = 10;
+        
         if (x.toString().length > 13) {
-            consoleResultado.innerHTML = "Limite de caracteres"
-            ultimaConta.innerHTML = `Expressão: ${textoUltimaConta} = ${parseFloat(saidaArray).toFixed(4)}`;
-        } else {
-            consoleResultado.innerHTML = parseFloat(saidaArray).toFixed(contRound);
-            ultimaConta.innerHTML = `Expressão: ${textoUltimaConta}`;
+            for (let i = 0; i < 10; i++){
+                if (x.toString().length > 13) {
+                    contRound = contRound - 1;
+                }
+            }
+            if (x.toString().length > 13) {
+                consoleResultado.innerHTML = "Limite de caracteres"
+                ultimaConta.innerHTML = `Entradas: ${textoUltimaConta} = ${parseFloat(saidaArray).toFixed(4)}`;
+            } else {
+                consoleResultado.innerHTML = parseFloat(saidaArray).toFixed(contRound);
+                ultimaConta.innerHTML = `Entradas: ${textoUltimaConta}`;
+            }
+        } else{
+            consoleResultado.innerHTML = saidaArray;
+            ultimaConta.innerHTML = `Entradas: ${textoUltimaConta}`;
         }
-    } else{
-        consoleResultado.innerHTML = saidaArray;
-        ultimaConta.innerHTML = `Expressão: ${textoUltimaConta}`;
+        let y = saidaArray;
+        tamanhoTexto = y.toString();
+        saidaArray = saidaArray.toString();
     }
-    let y = saidaArray;
-    tamanhoTexto = y.toString();
 }
 
 function saidaValores(){
@@ -98,99 +87,95 @@ function operacaoPorcentagem(){
         let resultadoPercentual='';
         if (entradas.length == 0){
             let valorPercentual = saidaArray;
-            if (isNaN(valorPercentual) == false){
-                let resultadoPercentual = valorPercentual/100;
-                entradas.push(resultadoPercentual);
-                inputuser = resultadoPercentual;
-                saidaArray = inputuser;
-                consoleResultado.innerHTML = inputuser;
-                entradas.pop();
+            if (valorPercentual.substring(0,2) === '(-'){
+                valorPercentual = valorPercentual.slice(2);
+                resultadoPercentual = parseFloat(valorPercentual/100);
+                resultadoPercentual = '(-' + resultadoPercentual.toString();
+            } else {
+                resultadoPercentual = parseFloat(valorPercentual/100);
+                resultadoPercentual = resultadoPercentual.toString();
             }
+            entradas.push(resultadoPercentual);
+            inputuser = resultadoPercentual;
+            saidaArray = inputuser;
+            consoleResultado.innerHTML = inputuser;
+            entradas.pop();
         } else {
             if (entradas.length > 0){
                 let valorPercentual = saidaArray;
                 let textConsole = '';
-                if (isNaN(valorPercentual) == false){
-                    if (entradas[entradas.length-1] == '+' || entradas[entradas.length-1] == '-'){
-                        removeNAN();
-                        resultadoPercentual = (valorPercentual/100)*entradas[entradas.length-2];
+                if (valorPercentual.substring(0,2) === '(-'){
+                    valorPercentual = valorPercentual.slice(2);
+                    if (entradas[entradas.length-1] == '+' || entradas[entradas.length-1] == '-'){;
+                        resultadoPercentual = parseFloat(valorPercentual/100)*entradas[entradas.length-2];
                     } else {
-                        removeNAN()
-                        resultadoPercentual = valorPercentual/100;
+                        resultadoPercentual = parseFloat(valorPercentual/100);
                     }
-                    entradas.push(resultadoPercentual);
-                    inputuser = resultadoPercentual;
-                    saidaArray = inputuser;
-                    entradas.push(parseFloat(saidaArray));
-                    for (let i = 0; i < entradas.length-1; i++) {
-                        textConsole += entradas[i];
+                    resultadoPercentual = '(-' + resultadoPercentual.toString();
+                } else {
+                    if (entradas[entradas.length-1] == '+' || entradas[entradas.length-1] == '-'){;
+                        resultadoPercentual = parseFloat(valorPercentual/100)*entradas[entradas.length-2];
+                    } else {
+                        resultadoPercentual = parseFloat(valorPercentual/100);
                     }
-                    consoleResultado.innerHTML = textConsole;
-                    entradas.pop();
-                    entradas.pop();
+                    resultadoPercentual = resultadoPercentual.toString();
                 }
+                if (resultadoPercentual.length > 13) {
+                    resultadoPercentual = parseFloat(resultadoPercentual).toFixed(4).toString();
+                }
+                entradas.push(resultadoPercentual);
+                inputuser = resultadoPercentual;
+                saidaArray = inputuser;
+                saidaArray = saidaArray.toString();
+                entradas.push(saidaArray);
+                for (let i = 0; i < entradas.length-1; i++) {
+                    textConsole += entradas[i];
+                }
+                consoleResultado.innerHTML = textConsole;
+                entradas.pop();
+                entradas.pop();
+                
             }
         }
     }
 }
 
 function operacaoMaisMenos(){
-    if (saidaArray != '' && saidaArray != '-'){
-        let valorConvertido = 0;
-        let textConsole = '';
-        if (saidaArray != '-') {
-            entradas.push(parseFloat(saidaArray));
-            saidaArray = entradas[entradas.length - 1];
-            saidaArray = parseFloat(saidaArray * -1);
-            entradas.pop();
-            entradas.push(parseFloat(saidaArray));
-            for (let i = 0; i < entradas.length; i++) {
-                textConsole += entradas[i];
-            }
-            saidaArray=`${entradas[entradas.length - 1]}`;
-            entradas.pop();
-                //Remove NaN
-                for (let i = 0; i <= entradas.length -1; i++) {
-                    if (isNaN(entradas[i]) == true){
-                        if (entradas[i] != '+' && entradas[i] != '-' && entradas[i] != '÷' && entradas[i] != 'x'){
-                            entradas.splice(i,i);
-                            i = 0;
-                        }
-                    }
+    let novoTexto = '';
+    if (saidaArray !== '') {
+        saidaArray = saidaArray.toString();
+        if (saidaArray.substring(0,2) === '(-'){
+            let valorConvertido = 0;
+            let textConsole = '';
+            if (entradas.length > 0) {
+                novoTexto = '';
+                for (let i = 0; i < entradas.length; i++){
+                    novoTexto += entradas[i];
                 }
-            consoleResultado.innerHTML = '';
-            for (let i = 0; i <= entradas.length - 1; i++){
-                consoleResultado.innerHTML += entradas[i];
             }
-            consoleResultado.innerHTML += saidaArray;
+            saidaArray = saidaArray.slice(2);
+            novoTexto += saidaArray;
+            consoleResultado.innerHTML = novoTexto;
+        } else {
+            entradas.push(saidaArray);
+            novoTexto = ''
+            for (let i = 0; i < entradas.length; i++) {
+                novoTexto += entradas[i];
+            }
+            saidaArray = '(-' + saidaArray;
+            entradas.pop();
+            novoTexto = ''
+            for (let i = 0; i < entradas.length; i++) {
+                novoTexto += entradas[i];
+            }           
+            consoleResultado.innerHTML = novoTexto + saidaArray;
         }
-    } else if (saidaArray == '-' && entradas.length == 0) {
-        consoleResultado.innerHTML = '';
-        saidaArray = '';
-    } else if (saidaArray != '-') {
-        inputuser = '-';
+    } else {
+        inputuser = '(-';
         if (tamanhoTexto.length <= 13){
             saidaArray += inputuser;
             saidaValores();
         }
-    }
-}
-
-function operacaoDuplicada(){
-    if (tamanhoTexto.length < 13){
-        if (tamanhoTexto.substring(tamanhoTexto.length-1,tamanhoTexto.length) == "x" || 
-        tamanhoTexto.substring(tamanhoTexto.length-1,tamanhoTexto.length) == "+" || 
-        tamanhoTexto.substring(tamanhoTexto.length-1,tamanhoTexto.length) == "-" || 
-        tamanhoTexto.substring(tamanhoTexto.length-1,tamanhoTexto.length) == "÷"){
-            entradas.pop();
-            tamanhoTexto = tamanhoTexto.substring(0,tamanhoTexto.length-1);
-            corrigeOperacao()
-        }
-
-        entradas.push(parseFloat(saidaArray));
-        entradas.push(inputuser)
-        saidaValores();
-        saidaArray = '';
     }
 }
 
@@ -212,13 +197,20 @@ function corrigeOperacao(){
 }
 
 function operacaoSoma(){
-    if (saidaArray != '') {
+    if (saidaArray != '' && saidaArray.substr(-2) !== '(-') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
             ultimaConta.innerHTML = '';
         }
+        let primeirosDoisDigitos = saidaArray.substring(0,2);
+        if (primeirosDoisDigitos === '(-'){
+            saidaArray += ')'
+        }
+        entradas.push(saidaArray);
         inputuser = '+'
-        operacaoDuplicada();
+        entradas.push(inputuser);
+        saidaValores();
+        saidaArray = '';
     }
     const ultimaEntrada = entradas[entradas.length - 1];
     if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
@@ -234,13 +226,20 @@ function operacaoSoma(){
 
 
 function operacaoSubtracao(){
-    if (saidaArray != '') {
+    if (saidaArray != '' && saidaArray.substr(-2) !== '(-') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
             ultimaConta.innerHTML = '';
         }
+        let primeirosDoisDigitos = saidaArray.substring(0,2);
+        if (primeirosDoisDigitos === '(-'){
+            saidaArray += ')'
+        }
+        entradas.push(saidaArray);
         inputuser = '-'
-        operacaoDuplicada();
+        entradas.push(inputuser);
+        saidaValores();
+        saidaArray = '';
     }
     const ultimaEntrada = entradas[entradas.length - 1];
     if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
@@ -255,13 +254,20 @@ function operacaoSubtracao(){
 }
 
 function operacaoDivisao(){
-    if (saidaArray != '') {
+    if (saidaArray != '' && saidaArray.substr(-2) !== '(-') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
             ultimaConta.innerHTML = '';
         }
+        let primeirosDoisDigitos = saidaArray.substring(0,2);
+        if (primeirosDoisDigitos === '(-'){
+            saidaArray += ')'
+        }
+        entradas.push(saidaArray);
         inputuser = '÷'
-        operacaoDuplicada();
+        entradas.push(inputuser);
+        saidaValores();
+        saidaArray = '';
     }
     const ultimaEntrada = entradas[entradas.length - 1];
     if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
@@ -276,13 +282,20 @@ function operacaoDivisao(){
 }
 
 function operacaoMultiplicacao(){
-    if (saidaArray != '') {
+    if (saidaArray != '' && saidaArray.substr(-2) !== '(-') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
             ultimaConta.innerHTML = '';
         }
+        let primeirosDoisDigitos = saidaArray.substring(0,2);
+        if (primeirosDoisDigitos === '(-'){
+            saidaArray += ')'
+        }
+        entradas.push(saidaArray);
         inputuser = 'x'
-        operacaoDuplicada();
+        entradas.push(inputuser);
+        saidaValores();
+        saidaArray = '';
     }
     const ultimaEntrada = entradas[entradas.length - 1];
     if (['+', '-', 'x', '÷'].includes(ultimaEntrada)) {
