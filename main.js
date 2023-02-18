@@ -212,6 +212,16 @@ function corrigeOperacao(){
 }
 
 function operacaoSoma(){
+    let ultimaEntrada = entradas[entradas.length-1];
+    if (ultimaEntrada == 'x' || ultimaEntrada == '÷' || ultimaEntrada == '-' || ultimaEntrada == '+') {
+        entradas.pop();
+        inputuser = '+';
+        entradas.push(inputuser);
+        consoleResultado.innerHTML = '';
+        for (let i = 0; i <= entradas.length - 1; i++){
+            consoleResultado.innerHTML += entradas[i];
+        }
+    }
     if (saidaArray != '') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
@@ -224,6 +234,16 @@ function operacaoSoma(){
 
 
 function operacaoSubtracao(){
+    let ultimaEntrada = entradas[entradas.length-1];
+    if (ultimaEntrada == 'x' || ultimaEntrada == '÷' || ultimaEntrada == '-' || ultimaEntrada == '+') {
+        entradas.pop();
+        inputuser = '-';
+        entradas.push(inputuser);
+        consoleResultado.innerHTML = '';
+        for (let i = 0; i <= entradas.length - 1; i++){
+            consoleResultado.innerHTML += entradas[i];
+        }
+    }
     if (saidaArray != '') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
@@ -235,6 +255,16 @@ function operacaoSubtracao(){
 }
 
 function operacaoDivisao(){
+    let ultimaEntrada = entradas[entradas.length-1];
+    if (ultimaEntrada == 'x' || ultimaEntrada == '÷' || ultimaEntrada == '-' || ultimaEntrada == '+') {
+        entradas.pop();
+        inputuser = '÷';
+        entradas.push(inputuser);
+        consoleResultado.innerHTML = '';
+        for (let i = 0; i <= entradas.length - 1; i++){
+            consoleResultado.innerHTML += entradas[i];
+        }
+    }
     if (saidaArray != '') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
@@ -246,6 +276,16 @@ function operacaoDivisao(){
 }
 
 function operacaoMultiplicacao(){
+    let ultimaEntrada = entradas[entradas.length-1];
+    if (ultimaEntrada == 'x' || ultimaEntrada == '÷' || ultimaEntrada == '-' || ultimaEntrada == '+') {
+        entradas.pop();
+        inputuser = 'x';
+        entradas.push(inputuser);
+        consoleResultado.innerHTML = '';
+        for (let i = 0; i <= entradas.length - 1; i++){
+            consoleResultado.innerHTML += entradas[i];
+        }
+    }
     if (saidaArray != '') {
         cmdPonto = '';
         if (ultimaConta.textContent != ''){
