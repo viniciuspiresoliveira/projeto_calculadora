@@ -167,7 +167,7 @@ function operacaoMaisMenos(){
     } else if (saidaArray == '-' && entradas.length == 0) {
         consoleResultado.innerHTML = '';
         saidaArray = '';
-    } else {
+    } else if (saidaArray != '-') {
         inputuser = '-';
         if (tamanhoTexto.length <= 13){
             saidaArray += inputuser;
