@@ -55,6 +55,7 @@ button {
 button:hover {
     font-weight: bolder;
     border: none;
+    background-color: #d8edf4;
 }
 
 #botao-limpar {
