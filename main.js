@@ -94,49 +94,51 @@ function limparCalc(){
 }
 
 function operacaoPorcentagem(){
-    let resultadoPercentual='';
-    if (entradas.length == 0){
-        let valorPercentual = saidaArray;
-        if (isNaN(valorPercentual) == false){
-            let resultadoPercentual = valorPercentual/100;
-            entradas.push(resultadoPercentual);
-            inputuser = resultadoPercentual;
-            saidaArray = inputuser;
-            consoleResultado.innerHTML = inputuser;
-            entradas.pop();
-        }
-    } else {
-        if (entradas.length > 0){
+    if (saidaArray != '') {
+        let resultadoPercentual='';
+        if (entradas.length == 0){
             let valorPercentual = saidaArray;
-            let textConsole = '';
             if (isNaN(valorPercentual) == false){
-                if (entradas[entradas.length-1] == '+' || entradas[entradas.length-1] == '-'){
-                    removeNAN();
-                    resultadoPercentual = (valorPercentual/100)*entradas[entradas.length-2];
-                } else {
-                    removeNAN()
-                    resultadoPercentual = valorPercentual/100;
-                }
+                let resultadoPercentual = valorPercentual/100;
                 entradas.push(resultadoPercentual);
                 inputuser = resultadoPercentual;
                 saidaArray = inputuser;
-                entradas.push(parseFloat(saidaArray));
-                for (let i = 0; i < entradas.length-1; i++) {
-                    textConsole += entradas[i];
+                consoleResultado.innerHTML = inputuser;
+                entradas.pop();
+            }
+        } else {
+            if (entradas.length > 0){
+                let valorPercentual = saidaArray;
+                let textConsole = '';
+                if (isNaN(valorPercentual) == false){
+                    if (entradas[entradas.length-1] == '+' || entradas[entradas.length-1] == '-'){
+                        removeNAN();
+                        resultadoPercentual = (valorPercentual/100)*entradas[entradas.length-2];
+                    } else {
+                        removeNAN()
+                        resultadoPercentual = valorPercentual/100;
+                    }
+                    entradas.push(resultadoPercentual);
+                    inputuser = resultadoPercentual;
+                    saidaArray = inputuser;
+                    entradas.push(parseFloat(saidaArray));
+                    for (let i = 0; i < entradas.length-1; i++) {
+                        textConsole += entradas[i];
+                    }
+                    consoleResultado.innerHTML = textConsole;
+                    entradas.pop();
+                    entradas.pop();
                 }
-                consoleResultado.innerHTML = textConsole;
-                entradas.pop();
-                entradas.pop();
             }
         }
     }
 }
 
 function operacaoMaisMenos(){
-    if (saidaArray != ''){
+    if (saidaArray != '' && saidaArray != '-'){
         let valorConvertido = 0;
         let textConsole = '';
-        if (parseFloat(saidaArray) > 0) {
+        if (saidaArray != '-') {
             entradas.push(parseFloat(saidaArray));
             saidaArray = entradas[entradas.length - 1];
             saidaArray = parseFloat(saidaArray * -1);
@@ -162,6 +164,9 @@ function operacaoMaisMenos(){
             }
             consoleResultado.innerHTML += saidaArray;
         }
+    } else if (saidaArray == '-' && entradas.length == 0) {
+        consoleResultado.innerHTML = '';
+        saidaArray = '';
     } else {
         inputuser = '-';
         if (tamanhoTexto.length <= 13){
@@ -207,40 +212,48 @@ function corrigeOperacao(){
 }
 
 function operacaoSoma(){
-    cmdPonto = '';
-    if (ultimaConta.textContent != ''){
-        ultimaConta.innerHTML = '';
+    if (saidaArray != '') {
+        cmdPonto = '';
+        if (ultimaConta.textContent != ''){
+            ultimaConta.innerHTML = '';
+        }
+        inputuser = '+'
+        operacaoDuplicada();
     }
-    inputuser = '+'
-    operacaoDuplicada();
 }
 
 
 function operacaoSubtracao(){
-    cmdPonto = '';
-    if (ultimaConta.textContent != ''){
-        ultimaConta.innerHTML = '';
+    if (saidaArray != '') {
+        cmdPonto = '';
+        if (ultimaConta.textContent != ''){
+            ultimaConta.innerHTML = '';
+        }
+        inputuser = '-'
+        operacaoDuplicada();
     }
-    inputuser = '-'
-    operacaoDuplicada();
 }
 
 function operacaoDivisao(){
-    cmdPonto = '';
-    if (ultimaConta.textContent != ''){
-        ultimaConta.innerHTML = '';
+    if (saidaArray != '') {
+        cmdPonto = '';
+        if (ultimaConta.textContent != ''){
+            ultimaConta.innerHTML = '';
+        }
+        inputuser = '÷'
+        operacaoDuplicada();
     }
-    inputuser = '÷'
-    operacaoDuplicada();
 }
 
 function operacaoMultiplicacao(){
-    cmdPonto = '';
-    if (ultimaConta.textContent != ''){
-        ultimaConta.innerHTML = '';
+    if (saidaArray != '') {
+        cmdPonto = '';
+        if (ultimaConta.textContent != ''){
+            ultimaConta.innerHTML = '';
+        }
+        inputuser = 'x'
+        operacaoDuplicada();
     }
-    inputuser = 'x'
-    operacaoDuplicada();
 }
 
 function zero(){
